@@ -26,6 +26,11 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public ReadBoardRespDto readBoard(int boardcode) throws Exception {
+		return boardRepository.findBoardByBoardcode(boardcode).toReadBoardDto();
+	}
+	
+	@Override
+	public ReadBoardRespDto readBoardList(int page) throws Exception {
 		return null;
 	}
 
