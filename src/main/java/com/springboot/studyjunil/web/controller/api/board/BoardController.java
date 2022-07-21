@@ -1,5 +1,7 @@
 package com.springboot.studyjunil.web.controller.api.board;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,8 +59,15 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public ResponseEntity<?> getBoardList(@RequestParam int page){
+		List<ReadBoardRespDto> boardDtoList = null;
+		try {
+			boardDtoList = boardService.readBoardList(page);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.ok().body(new CMRespDto<>(-1, "게시글 리스트 " + page + "페이지 불러오기 실패", boardDtoList));
+		}
 		
-		return ResponseEntity.ok().body(new CMRespDto<>(1, "게시글 리스트 " + page + "페이지 불러오기 성공", null));
+		return ResponseEntity.ok().body(new CMRespDto<>(1, "게시글 리스트 " + page + "페이지 불러오기 성공", boardDtoList));
 		
 	}
 	

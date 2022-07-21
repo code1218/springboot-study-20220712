@@ -1,5 +1,8 @@
 package com.springboot.studyjunil.service.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.springboot.studyjunil.domain.board.Board;
@@ -30,8 +33,14 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public ReadBoardRespDto readBoardList(int page) throws Exception {
-		return null;
+	public List<ReadBoardRespDto> readBoardList(int page) throws Exception {
+		List<ReadBoardRespDto> BoardDtoList = new ArrayList<ReadBoardRespDto>();
+		
+		boardRepository.getBoardListOfIndex((page - 1) * 10).forEach(board -> {
+			BoardDtoList.add(board.toReadBoardDto());
+		});
+		
+		return BoardDtoList;
 	}
 
 	@Override
